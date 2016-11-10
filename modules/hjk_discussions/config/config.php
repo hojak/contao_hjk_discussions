@@ -39,15 +39,11 @@
  * file to see how back end modules are configured.
  */
  
- /*
-array_insert ( $GLOBALS['BE_MOD'],1, array ( 'hjk_bookings' => array (
-	'hjk_mycourses'    =>	array (
-        'icon'          => 'system/modules/hjk_bookings/assets/images/report.png',
-        'callback'      => '\\HJK\\Bookings\\BEMyCourses',
-	),
-)));
- * */
-
+$GLOBALS['BE_MOD']['content']['hjk_discussions'] = array (
+        'icon'          => 'system/modules/hjk_discussions/assets/img/comments.png',
+        'tables'        => array ('tl_hjk_discussions_group', 'tl_hjk_discussions_post'),
+);
+ 
 
 /**
  * FRONT END MODULES
@@ -70,10 +66,11 @@ array_insert ( $GLOBALS['BE_MOD'],1, array ( 'hjk_bookings' => array (
  * module is rendered. The class "ModuleClass1" has to be stored in a file
  * named "ModuleClass1.php" in your module folder.
  */
-array_insert($GLOBALS['FE_MOD']['hjk_bookings'], 0, array
+/*
+ * $GLOBALS['FE_MOD']['content'][] = array
 (
  'hjk_discussion' => '\\HJK\\Discussion\\DiscussionModule',
-));
+);*/
 
 
 

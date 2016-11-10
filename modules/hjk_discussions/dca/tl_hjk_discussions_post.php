@@ -18,124 +18,159 @@
 $GLOBALS['TL_DCA']['tl_hjk_discussions_post'] = array
 (
 
-	// Config
-	'config' => array
-	(
-		'dataContainer'               => 'table',
-		'enableVersioning'            => false,
-		'ptable'                      => 'tl_hjk_discussions_group',
-		// 'notEditable'                 => true,
-		//'notDeletable'                => true,
-		'notCopyable'                 => true,
-		// 'notCreatale'                 => true,
-		'doNotCopyRecords'            => true,
-        //'switchToEdit'                => true,
-		
-		'sql' => array
-		(
-			'keys' => array
-			(
-				'id'        => 'primary',
+    // Config
+    'config' => array
+    (
+        'dataContainer'               => 'Table',
+        'enableVersioning'            => false,
+        'ptable'                      => 'tl_hjk_discussions_group',
+        //'notDeletable'                => true,
+        'notCopyable'                 => true,
+
+        'sql' => array
+        (
+            'keys' => array
+            (
+                'id'        => 'primary',
                 'thread_id' => 'index',
-			)
-		)
-	),
+            )
+        )
+    ),
 
-	// List
-	'list' => array
-	(
-		'sorting' => array
+    // List
+    'list' => array
+    (
+        'sorting' => array
+        (
+            'mode'                    => 1,
+            'fields'                  => array('date_posted DESC'),
+            'flag'                    => 1,
+        ),
+        'label' => array (
+            'showColumns'       => true,
+            'fields'            => array ('date_posted,member,subject'),
+        ),
+        'global_operations' => array
+        (
+        ),
+        'operations' => array
 		(
-			'mode'                    => 4,
-			'fields'                  => array('date_cancelled, date_confirmed desc, date_applied, member'),
-			'flag'                    => 11,
-            'headerFields'            => array ('pid','start','instructor', 'no_of_slots'),
-            'child_record_callback'   => array('tl_hjk_bookings_application', 'childRecordCallback'),
-            'disableGrouping'         => true,
-            
-		),
-		'global_operations' => array
-		(
-		),
-		'operations' => array
-		(
-			'edit' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['edit'],
-				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
-			),
-		)
-	),
+            'edit' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_hjk_discussions_post']['edit'],
+                'href'                => 'act=edit',
+                'icon'                => 'edit.gif'
+            ),
+        )
+    ),
 
-	// Select
-	'select' => array
-	(
-		'buttons_callback' => array()
-	),
+    // Select
+    'select' => array
+    (
+        'buttons_callback' => array()
+    ),
 
-	// Edit
-	'edit' => array
-	(
-		'buttons_callback' => array()
-	),
+    // Edit
+    'edit' => array
+    (
+        'buttons_callback' => array()
+    ),
 
-	// Palettes
-	'palettes' => array
-	(
-		'__selector__'                => array(''),
-		'default'                     => '{general_legend},member,date_applied;{admin_legend:hide},date_cancelled,cancelled_by_admin,date_confirmed,date_cancel_latest,accounting;'
-	),
+    // Palettes
+    'palettes' => array
+    (
+        '__selector__'                => array(''),
+        'default'                     => '{content_legend},subject,content;{admin_legend},published;'
+    ),
 
-	// Subpalettes
-	'subpalettes' => array
-	(
-		''                            => ''
-	),
+    // Subpalettes
+    'subpalettes' => array
+    (
+        ''                            => ''
+    ),
 
-	// Fields
-	'fields' => array
-	(
-		'id' => array
-		(
-			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-		),	
-		'tstamp' => array
-		(
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
-		),
-		'thread_id' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['member'],
-			'foreignKey'              => 'tl_member.username',
-			'relation'                => array ('type' => 'hasOne', 'load' => 'eager' ),
+    // Fields
+    'fields' => array
+    (
+        'id' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+        ),
+        'pid' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_discussions_post']['pid'],
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
-            'inputType'               => 'select',
-            'eval'                    => array ('mandatory' => true,'includeBlankOption' => true),
-            'options_callback'         => array ('tl_hjk_bookings_application','memberOptions'),
-		),
-		'reply_to' => array (
-		),
-		'member' => array (
-		),
-        'date_posted' => array (
+            "relation"                => array ("type" => "hasOne", 'load' => "eager" ),
+            "foreignKey"              => 'tl_hjk_discussions_group.name',
         ),
-        'date_confirmed' => array (
+        'tstamp' => array
+        (
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
-        'subject' => array (
-        ),
-        'content' => array (
+        'thread_id' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['thread_id'],
+            'sql'                     => "varchar(255) NOT NULL default ''",
+            'inputType'               => 'text',
+            'exclude'                 => true,
         ),
         'thread_order' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['member'],
+             'exclude'                 => true,
+             'sql'                     => "int(10) unsigned NOT NULL default '0'",
         ),
 
-	)
+           
+        'reply_to' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['reply_to'],
+            'sql'                     => "int(10) unsigned NULL",
+            'relation'                => array ('type' => 'hasOne', 'load' => 'lazy' ),
+            'foreignKey'              => 'tl_hjk_discussions_post.id',
+        ),
+        'member' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['member'],
+            'foreignKey'              => 'tl_member.username',
+            'relation'                => array ('type' => 'hasOne', 'load' => 'eager' ),
+            'sql'                     => "int(10) unsigned NOT NULL default '0'",
+            'inputType'               => 'select',
+        ),
+        'date_posted' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['date_posted'],
+            'inputType'               => 'text',
+            'exclude'                 => true,
+            'eval'                    => array('rgxp'=>'datim'),
+            'sql'                     => "int(10) NULL",
+            'default'                 => time(),
+        ),
+        'published' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['published'],
+            'exclude'                 => true,
+            'filter'                  => true,
+            'inputType'               => 'checkbox',
+            'eval'                    => array('doNotCopy'=>true),
+            'sql'                     => "char(1) NOT NULL default ''",
+        ),
+        'subject' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['subject'],
+            'exclude'                 => true,
+            'inputType'               => 'text',
+            'eval'                    => array('mandatory'=>true, 'maxlength'=>255),
+            'sql'                     => 'varchar(255) NULL',
+        ),
+        'content' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['content'],
+            'inputType'               => 'textarea',
+            'eval'                    => array('mandatory'=>true, 'rte'=>'tinyMCE'),
+            'sql'                     => 'text NULL',
+            'search'                  => true,
+        ),
+
+    )
 );
 
 
 
 
-class tl_hjk_bookings_application extends Backend {
+class tl_hjk_discussions_post extends Backend {
     
 
 
