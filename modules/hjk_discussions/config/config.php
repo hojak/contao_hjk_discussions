@@ -66,11 +66,7 @@ $GLOBALS['BE_MOD']['content']['hjk_discussions'] = array (
  * module is rendered. The class "ModuleClass1" has to be stored in a file
  * named "ModuleClass1.php" in your module folder.
  */
-/*
- * $GLOBALS['FE_MOD']['content'][] = array
-(
- 'hjk_discussion' => '\\HJK\\Discussion\\DiscussionModule',
-);*/
+$GLOBALS['FE_MOD']['application']['hjk_discussion'] = '\\HJK\\Discussions\\FEDiscussion';
 
 
 

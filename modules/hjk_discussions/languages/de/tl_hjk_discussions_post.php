@@ -12,6 +12,7 @@ $GLOBALS['TL_LANG']['tl_hjk_discussions_post'] = array (
     'thread_id'     => array ('Diskussions-ID','Diskussions-ID (intern)'),
     'thread_order'  => array ('Diskussions-Reihenfolge','Reihenfolge der Nachrichten'),
     'reply_to'      => array ('Antwort auf','Antwort auf welchen Beitrag'),
+    'reply_depth'   => array ('Antwort-Tiefe','Tiefe des Beitrags im Antwortbaum'),
     'member'        => array ('Mitglied','Mitglied'),
     'date_posted'   => array ('Datum','Datum'),
     'published'     => array ('Veröffentlicht?','Veröffentlicht?'),

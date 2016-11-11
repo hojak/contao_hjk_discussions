@@ -31,8 +31,8 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_post'] = array
         (
             'keys' => array
             (
-                'id'        => 'primary',
-                'thread_id' => 'index',
+                'id'            => 'primary',
+                'discussion_id' => 'index',
             )
         )
     ),
@@ -106,15 +106,26 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_post'] = array
         (
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
-        'thread_id' => array
+        'parent_type' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['parent_type']['label'],
+            'sql'                     => "varchar(255) NOT NULL default 'module'",
+            'inputType'               => 'select',
+            'exclude'                 => true,
+            'options'                 => array (
+                'module'                 => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['parent_type']['module'],
+                'page'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['parent_type']['page'],
+                'url'                    => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['parent_type']['url'],
+            ),
+        ),
+        'discussion_id' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['thread_id'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['discussion_id'],
             'sql'                     => "varchar(255) NOT NULL default ''",
             'inputType'               => 'text',
             'exclude'                 => true,
         ),
-        'thread_order' => array (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['member'],
+        'discussion_order' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['discussion_order'],
              'exclude'                 => true,
              'sql'                     => "int(10) unsigned NOT NULL default '0'",
         ),
@@ -125,6 +136,12 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_post'] = array
             'sql'                     => "int(10) unsigned NULL",
             'relation'                => array ('type' => 'hasOne', 'load' => 'lazy' ),
             'foreignKey'              => 'tl_hjk_discussions_post.id',
+            'exclude'                 => true,
+        ),
+        'reply_depth' => array (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['reply_depth'],
+            'sql'                     => "int(10) unsigned NULL",
+            'exclude'                 => true,
         ),
         'member' => array (
             'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['member'],
