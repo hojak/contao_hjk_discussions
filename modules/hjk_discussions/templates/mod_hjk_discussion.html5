@@ -34,20 +34,21 @@
 </p>
 <?php endif; ?>
   <!-- discussion form --------------------->
-<div class="form">
+<div class="formbody">
+  <h3>Kommentar schreiben</h3>
     <form method="post" id="hjk_discussion_<?= $this->module_id ?>">
         <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">        
         <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formName ?>">
         <input type="hidden" name="reply_to" value="" />
 
         <div class="widget">
-        <label for="subject">Betreff</label>
-        <input type="text" class="" name="subject" />
+        <label for="subject" class="mandatory">Betreff</label>
+        <input type="text" class="text mandatory" name="subject" required placeholder="Betreffzeile" />
         </div>
         
         <div class="widget">
-        <label for="content">Deine Nachricht</label>
-        <textarea name="content"></textarea>
+        <label for="content" class="mandatory">Deine Nachricht</label>
+        <textarea name="content" rows="6" class="mandatory" required placeholder="Deine Nachricht"></textarea>
         </div>
         
         <div class="submit_container button bg_right bg_purple icon_arrow_white">
