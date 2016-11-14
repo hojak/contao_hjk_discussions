@@ -91,7 +91,7 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_group'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
-		'default'                     => '{general_legend},name,allow_bb;'
+		'default'                     => '{general_legend},name;'
 	),
 
 	// Subpalettes
@@ -119,12 +119,14 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_group'] = array
             'eval'                    => array ('mandatory' => true ),
             'exclude'                 => true,
 		),
+        /*
         'allow_bb' => array (
 			'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_discussions_group']['allow_bb'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
             'sql'                     => "char(1) NOT NULL default ''",
         ),
+         * */
         'date_last_post' => array (
 			'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_discussions_group']['date_last_post'],
             'exclude'                 => true,

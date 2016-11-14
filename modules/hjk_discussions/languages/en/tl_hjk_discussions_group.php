@@ -4,10 +4,10 @@ $GLOBALS['TL_LANG']['tl_hjk_discussions_group'] = array (
     // operations
 
     // legenden
-    'general_legend' => 'Gruppendaten',
+    'general_legend' => 'Group data',
 
 
     // fields
-    'name' => array ('Name','Name der Gruppe'),
+    'name' => array ('Name','Name of the Group'),
     'date_last_post' => array ('Letzter Beitrag','Datum und Uhrzeit des letzten Beitrags'),
 );

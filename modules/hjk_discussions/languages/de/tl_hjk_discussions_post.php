@@ -1,6 +1,5 @@
 <?php
 
-
 $GLOBALS['TL_LANG']['tl_hjk_discussions_post'] = array (
     // legends
 
