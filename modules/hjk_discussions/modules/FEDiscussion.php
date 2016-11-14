@@ -90,6 +90,7 @@ class FEDiscussion extends \Module {
         $template->reply = $this->hjk_discussion_reply;
         $template->post_id = $post->id;
         $template->module_id = $this->id;
+        $template->date_posted = $post->date_posted;
 
         
         if ( $replies = $post->replies ) {
