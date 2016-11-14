@@ -1,8 +1,11 @@
 <div class="hjk_discussion_post level_<?= $this->level ?>" id="post_<?= $this->module_id ?>_<?= $this->post_id ?>">
 
     <span class="avatarimage">
-    {{avatar::<?= $template->member_id?>?width=40&height=40&mode=proportional}}
+    {{avatar::<?= $template->member_id?>?width=60&height=60&mode=proportional}}
     </span>
+
+    <span class="date"><?= $this->parseDate ("d.m.Y", $this->date_posted ) ?></span>
+    <span class="time"><?= $this->parseDate ("H:i", $this->date_posted ) ?> Uhr</span>
 
     <h2 class="hjk_post_subject"><?= $this->subject ?></h2>
 
