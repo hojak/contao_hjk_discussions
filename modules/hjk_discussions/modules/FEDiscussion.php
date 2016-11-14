@@ -144,8 +144,17 @@ class FEDiscussion extends \Module {
             }
 
             $this->Session->set('hjk_discussion_confirm', 1);
-            return \Controller::redirect ( $this->addToUrl () );
+            return \Controller::redirect ( $this->addToUrl ("") );
         }
+    }
+
+
+    private function extractCurrentUrl () {
+        $rq = $this->Environment->request;
+        if ( ($pos = strpos($rq, "?")) !== false )
+            $rq = substr ( $rq, 0, $pos );
+
+        return $rq;
     }
     
     
@@ -162,21 +171,26 @@ class FEDiscussion extends \Module {
         // TODO
         switch ( $this->hjk_discussion_parent_type) {
             case 'page':
-                $this->currentDiscussionId = "pid: " . $objPage->id;
+                $this->currentDiscussionId = $objPage->id;
                 break;
             case 'url':
-                $this->currentDiscussionId = "url: " . $this->Environment->request;
+                $this->currentDiscussionId = $this->extractCurrentUrl();
                 break;
             case 'globalObj':
                 global $hjkDiskussionBase;
-                if ( $hjkDiskussionBase )
-                    $this->currentDiscussionId = "obj: " . get_class($hjkDiskussionBase) . "/" . $hjkDiskussionBase->id;
-                else
-                    $this->currentDiscussionId = "url: " . $this->Environment->request;
+                if ( $hjkDiskussionBase ) {
+                    $this->currentDiscussionId = get_class($hjkDiskussionBase) . "/" . $hjkDiskussionBase->id;
+                } else {
+                    $rq = $this->Environment->request;
+                    if ( ($pos = strpos($rq, "?")) !== false )
+                        $rq = substr ( $rq, 0, $pos );
+
+                    $this->currentDiscussionId = $this->extractCurrentUrl();
+                }
                 break;
             case 'module':
             default;
-                $this->currentDiscussionId = "mid: " . $this->id;
+                $this->currentDiscussionId = $this->id;
         }
    }
     
