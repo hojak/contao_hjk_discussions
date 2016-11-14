@@ -2,14 +2,43 @@
 
 <?php $this->block('content'); ?>
 
-    
 
-  
+<?php if ( $this->renderedPosts ): ?>
+<div class="discussion_posts" >
+
+    <?php foreach ( $this->renderedPosts as $post ): ?>
+    <?= $post ?>
+    <?php endforeach; ?>
+
+</div>
+<?php endif; ?>
+
+
+<br clear="all" />
+
+
+<?php if ( $this->open && FE_USER_LOGGED_IN ): ?>
+
+<!-- indexer::stop -->
+<?php if ( $this->confirm ): ?>
+<p class="message">Vielen Dank für Deinen Beitrag!</p>
+<?php elseif ( $this->error ): ?>
+<p class="error">
+    <?php
+        switch ( $this->error ) {
+            case 'noLogin': print "Bitte logge Dich ein, um Dich an der Diskussion beteiligen zu können!"; break;
+            case 'noSubject':
+            case 'noContent': print "Leider waren Deine Eingaben nicht vollständig!";
+        }
+    ?>
+</p>
+<?php endif; ?>
   <!-- discussion form --------------------->
 <div class="form">
-    <form method="post">
+    <form method="post" id="hjk_discussion_<?= $this->module_id ?>">
         <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">        
-        <input type="hidden" name="FORM_SUBMIT" value="hjk_send_post">
+        <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formName ?>">
+        <input type="hidden" name="reply_to" value="" />
 
         <div class="widget">
         <label for="subject">Betreff</label>
@@ -18,8 +47,7 @@
         
         <div class="widget">
         <label for="content">Deine Nachricht</label>
-        <textarea name="content">
-        </textarea>
+        <textarea name="content"></textarea>
         </div>
         
         <div class="submit_container button bg_right bg_purple icon_arrow_white">
@@ -28,12 +56,14 @@
         
     </form>
 </div>
-  
+
+<!-- indexer::continue -->
+
+<?php endif; ?>
+
   
 
 <?php $this->endblock(); ?>
-
-
 
 
 

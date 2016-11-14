@@ -1,0 +1,25 @@
+<div class="hjk_discussion_post level_<?= $this->level ?>" id="post_<?= $this->module_id ?>_<?= $this->post_id ?>">
+
+    <span class="avatarimage">
+    {{avatar::<?= $template->member_id?>?width=40&height=40&mode=proportional}}
+    </span>
+
+    <h2 class="hjk_post_subject"><?= $this->subject ?></h2>
+
+    <div class="hjk_post_content"><?= nl2br($this->content) ?></div>
+
+    <?php if ( $this->reply ): ?>
+        <input type="button" onclick="hjk_discussion_reply_click( <?= $this->module_id ?>, <?= $this->post_id ?>)" value="antworten" class="button bg_right bg_purple bg_arrow_white_down" />
+    <?php endif; ?>
+
+
+    <?php if ( $this->renderedReplies ): ?>
+    <div class="replies">
+        <?php foreach ( $this->renderedReplies as $reply ): ?>
+        <?= $reply ?>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+
+
+</div>

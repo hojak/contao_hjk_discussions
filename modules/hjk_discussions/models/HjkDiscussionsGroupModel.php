@@ -40,18 +40,27 @@ class HjkDiscussionsGroupModel extends \Model {
         
         $rootPosts = array ();
         $id2post = array ();
-        
-        foreach ( $posts as $post ) {
-            $id2post [ $post->id ] = &$post;
-            if ( ! $posts -> reply_to ) {
-                array_unshift ( $rootPosts, $post );
-            } else {
-                $answers = $id2post[$post->reply_to];
-                array_unshift ( $answers, $post );
-                $id2post[$post->reply_to]->replies = $answers;
+
+        if ( $posts ) {
+            foreach ( $posts as &$post ) {
+                $id2post [ $post->id ] = &$post;
+
+                if ( $post -> reply_to ) {
+                    $answers = $id2post[$post->reply_to]->replies;
+                    if ( ! $answers )
+                        $answers = array ();
+                    array_unshift ( $answers, "temp" );
+                    $answers[0] = &$post;
+                    $id2post[$post->reply_to]->replies = $answers;
+                } else {
+                    array_unshift ( $rootPosts, "temp" );
+                    $rootPosts[0] = &$post;
+                }
             }
-        }
-        
+        } else
+            return array ();
+
+
         return $rootPosts;
     }
 }

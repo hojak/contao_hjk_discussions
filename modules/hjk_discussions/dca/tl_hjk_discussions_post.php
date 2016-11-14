@@ -140,11 +140,13 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_post'] = array
             'foreignKey'              => 'tl_hjk_discussions_post.id',
             'exclude'                 => true,
         ),
+        /*
         'reply_depth' => array (
             'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['reply_depth'],
             'sql'                     => "int(10) unsigned NULL",
             'exclude'                 => true,
-        ),
+        ),*/
+
         'member' => array (
             'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['member'],
             'foreignKey'              => 'tl_member.username',

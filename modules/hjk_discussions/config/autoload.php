@@ -48,4 +48,5 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array(
 	 'mod_hjk_discussion'         => 'system/modules/hjk_discussions/templates',
+	 'mod_hjk_post'               => 'system/modules/hjk_discussions/templates',
 ));
