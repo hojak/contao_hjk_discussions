@@ -29,6 +29,7 @@ ClassLoader::addClasses(array
 
     // Models
     'HJK\\Discussions\\HjkDiscussionsGroupModel'    => 'system/modules/hjk_discussions/models/HjkDiscussionsGroupModel.php',
+    'HJK\\Discussions\\HjkDiscussionsPostModel'     => 'system/modules/hjk_discussions/models/HjkDiscussionsPostModel.php',
     
     // BE-Modules
     //'HJK\\Bookings\\BEBookings'  => 'system/modules/hjk_bookings/modules/BEBookings.php',

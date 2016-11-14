@@ -124,11 +124,13 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_post'] = array
             'inputType'               => 'text',
             'exclude'                 => true,
         ),
+        /*
         'discussion_order' => array (
             'label'                   => &$GLOBALS['TL_LANG']['tl_hjk_bookings_application']['discussion_order'],
              'exclude'                 => true,
              'sql'                     => "int(10) unsigned NOT NULL default '0'",
         ),
+         * */
 
            
         'reply_to' => array (

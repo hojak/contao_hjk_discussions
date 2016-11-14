@@ -1,5 +1,42 @@
-Discussion
+<?php $this->extend('block_searchable'); ?>
 
-<pre>
-<?php print_r ( $this->discussionGroup ); ?>
-</pre>
+<?php $this->block('content'); ?>
+
+    
+
+  
+  <!-- discussion form --------------------->
+<div class="form">
+    <form method="post">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">        
+        <input type="hidden" name="FORM_SUBMIT" value="hjk_send_post">
+
+        <div class="widget">
+        <label for="subject">Betreff</label>
+        <input type="text" class="" name="subject" />
+        </div>
+        
+        <div class="widget">
+        <label for="content">Deine Nachricht</label>
+        <textarea name="content">
+        </textarea>
+        </div>
+        
+        <div class="submit_container button bg_right bg_purple icon_arrow_white">
+            <input type="submit" value="abschicken" class="submit button bg_purple bg_right icon_arrow_white"/>
+        </div>
+        
+    </form>
+</div>
+  
+  
+
+<?php $this->endblock(); ?>
+
+
+
+
+
+<!--- <div class="mod_hjk_discussion<?= $this->class ?>" id="<?= $this->id ?>"> -->
+
+
