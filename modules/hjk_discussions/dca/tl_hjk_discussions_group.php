@@ -51,8 +51,9 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_group'] = array
 			'flag'                    => 1
 		),
         'label' => array (
-            'showColumns' => true,
-            'fields'        => array ('name', 'date_last_post'),
+            'showColumns'     => true,
+            'fields'          => array ('name', 'date_last_post'),
+            'label_callback'  => array ('tl_hjk_discussions_group', 'getRowLabel'),
 
         ),
 		'global_operations' => array
@@ -142,6 +143,11 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_group'] = array
 
 class tl_hjk_discussions_group extends Backend {
     
-
+    public function getRowLabel ( $arrRow  ) {
+        return array (
+            $arrRow['name'],
+            date('d.m.Y H:i', $arrRow['date_last_post'])
+        );
+    }
 
 }

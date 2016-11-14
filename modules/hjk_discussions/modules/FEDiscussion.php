@@ -121,7 +121,6 @@ class FEDiscussion extends \Module {
                 $this->Session->set('hjk_discussion_error', "noContent" );
                 return \Controller::redirect ( $this->addToUrl ("") );
             } else {
-
                 $post = new HjkDiscussionsPostModel ();
                 $post -> subject =  \Input::post('subject');
                 $post -> content =  \Input::post('content');
@@ -131,6 +130,7 @@ class FEDiscussion extends \Module {
                 $post -> member = $this->User->id;
                 $post -> date_posted = time();
                 $post -> published = 1;
+                $post -> page_url = $this->addToUrl();
 
                 $replyTo = null;
                 if ($replyId = \Input::post("reply_to")) {
@@ -142,10 +142,13 @@ class FEDiscussion extends \Module {
 
                 $post->save();
 
-            }
+                $group = HjkDiscussionsGroupModel::findById ( $this->hjk_discussion_group);
+                $group ->date_last_post = time();
+                $group->save();
 
-            $this->Session->set('hjk_discussion_confirm', 1);
-            return \Controller::redirect ( $this->addToUrl ("") );
+                $this->Session->set('hjk_discussion_confirm', 1);
+                return \Controller::redirect ( $this->addToUrl ("") );
+            }
         }
     }
 
