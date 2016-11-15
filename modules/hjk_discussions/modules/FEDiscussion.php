@@ -86,11 +86,12 @@ class FEDiscussion extends \Module {
         $template->level = $level;
         $template->subject = $post->subject;
         $template->content = $post->content;
-        $template->member_id = $post->member;
+        $template->member = $post->getRelated('member');
         $template->reply = $this->hjk_discussion_reply;
         $template->post_id = $post->id;
         $template->module_id = $this->id;
         $template->date_posted = $post->date_posted;
+        $template->avatarSize = unserialize ( $this->hjk_discussion_avatarSize );
 
         
         if ( $replies = $post->replies ) {

@@ -9,7 +9,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['hjk_discussion']
     = '{title_legend},name,headline,type;'
     .'{discussion_legend},hjk_discussion_group,hjk_discussion_parent_type,hjk_discussion_reply,hjk_discussion_open;'
     //.'{redirect_legend},jumpTo;'
-    .'{template_legend:hide},customTpl,hjk_discussion_postTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
+    .'{template_legend:hide},customTpl,hjk_discussion_postTpl,hjk_discussion_avatarSize;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
 
 
 // fields
@@ -61,6 +61,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['hjk_discussion_postTpl'] = array (
     'options_callback'        => array('tl_module_hjk_disc', 'getPostTemplates'),
     'eval'                    => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
     'sql'                     => "varchar(64) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['hjk_discussion_avatarSize'] = array (
+    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['hjk_discussion_avatarSize'],
+			'exclude'                 => true,
+			'inputType'               => 'imageSize',
+			'options'                 => System::getImageSizes(),
+			'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+			'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''",
+    'default'                 => array (40,40),
 );
 
 
