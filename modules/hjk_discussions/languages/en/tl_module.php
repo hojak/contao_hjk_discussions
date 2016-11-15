@@ -15,4 +15,4 @@ $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_reply'] = array ('enable replie
 $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_open'] = array ('discussion open?','is posting enabled?');
 $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_postTpl'] = array ('post template','template for single posts');
 
-+$GLOBALS['TL_LANG']['tl_module']['hjk_discussion_avatarSize'] = array ('size of avatar','image size and mode for the avtar image placed aside each post');
+$GLOBALS['TL_LANG']['tl_module']['hjk_discussion_avatarSize'] = array ('size of avatar','image size and mode for the avtar image placed aside each post');
