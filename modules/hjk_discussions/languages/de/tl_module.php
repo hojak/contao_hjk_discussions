@@ -14,3 +14,4 @@ $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_parent_type'] = array (
 $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_reply'] = array ('Antworten möglich?','Sollen Posts in den Diskussionen als Antwortbaum gespeichert werden?');
 $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_open'] = array ('Diskussion offen?','Können Beitrgäge in diese Diskussion geschrieben werden?');
 $GLOBALS['TL_LANG']['tl_module']['hjk_discussion_postTpl'] = array ('Beitrags-Template','Template für die einzelnen Beträge der Diskussion.');
+$GLOBALS['TL_LANG']['tl_module']['hjk_discussion_avatarSize'] = array ('Avatar-Größe','Bildgröße für den angezeigten Avatar.');
