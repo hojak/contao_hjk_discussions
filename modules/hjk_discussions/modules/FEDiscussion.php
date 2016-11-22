@@ -142,6 +142,8 @@ class FEDiscussion extends \Module {
                 }
 
                 $post->save();
+                
+                $post->sendAdminMail ();
 
                 $group = HjkDiscussionsGroupModel::findById ( $this->hjk_discussion_group);
                 $group ->date_last_post = time();

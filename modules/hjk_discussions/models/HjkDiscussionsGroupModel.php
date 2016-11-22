@@ -31,7 +31,10 @@ class HjkDiscussionsGroupModel extends \Model {
     
     
     public function getPublicPostsFLat ( $type, $id ) {
-        return HjkDiscussionsPostModel::findByThread ( $this->id, $type, $id );
+        $result = HjkDiscussionsPostModel::findByThread ( $this->id, $type, $id );
+        if ( ! $result )
+            $result = array ();
+        return $result;
     }
    
    
