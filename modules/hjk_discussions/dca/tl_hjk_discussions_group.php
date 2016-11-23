@@ -58,6 +58,14 @@ $GLOBALS['TL_DCA']['tl_hjk_discussions_group'] = array
         ),
 		'global_operations' => array
 		(
+        
+                
+            'watches' => array
+                (
+                    'label'               => &$GLOBALS['TL_LANG']['tl_hjk_discussions_group']['watches'],
+                    'href'                => 'table=tl_hjk_discussions_watch',
+                    'icon'                => 'visible.gif',
+                )
 		),
 		'operations' => array
 		(

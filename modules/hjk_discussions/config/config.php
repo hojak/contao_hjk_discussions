@@ -12,6 +12,24 @@
  */
 
 
+// default-values for tl_settings
+$GLOBALS['TL_CONFIG']['hjk_discussions_notification_subject'] = '[##domain##] Neuer Diskussionsbeitrag: ##subject##';
+$GLOBALS['TL_CONFIG']['hjk_discussions_notification_mail_template'] = 
+            'Hallo ##rec_name##,\n\nauf der Webseite gibt es einen neuen Kommentar unter <##link##>:\n\n'
+            . '-----------------------------------------------------------------------\n'
+            . 'Absender: ##author_firstname## ##author_lastname## (##author_username##)\n'
+            . 'Betreff: ##subject##\n'
+            . '\n'
+            . '##content##\n'
+            . '-----------------------------------------------------------------------\n'
+            . '\n\n\n'
+            . '/Dein Contao-System/\n'
+            . '-- \n'
+            . 'Diese Mail wurde automatisch erstellt\n';
+
+
+
+
 /**
  * BACK END MODULES
  *
@@ -41,7 +59,7 @@
  
 $GLOBALS['BE_MOD']['content']['hjk_discussions'] = array (
         'icon'          => 'system/modules/hjk_discussions/assets/img/comments.png',
-        'tables'        => array ('tl_hjk_discussions_group', 'tl_hjk_discussions_post'),
+        'tables'        => array ('tl_hjk_discussions_group', 'tl_hjk_discussions_post', 'tl_hjk_discussions_watch'),
 );
  
 

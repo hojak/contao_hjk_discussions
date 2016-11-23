@@ -13,6 +13,8 @@ class FEDiscussion extends \Module {
 
     protected static $postFormName = 'hjk_send_post';
     
+    protected static $postWatchFormName = "hjk_watch";
+    
     
     public function generate () {
         return parent::generate();
@@ -36,8 +38,15 @@ class FEDiscussion extends \Module {
     
     private function compileFrontend () {
         $this->initialize();
-                
-        $this->handleFormSubmit ();
+
+        if ($form = \Input::post('FORM_SUBMIT')) {
+            if ( $form == static::$postFormName) {
+                $this->_handleCommentSubmit ();
+            } elseif ( $form == static::$postWatchFormName ) {
+                $this->_handleWatchSubmit ();
+            }
+        }
+            
         
         $this->posts = $this->discussionGroup->getPublicPosts( $this->hjk_discussion_parent_type, $this->currentDiscussionId, $this->hjk_discussion_reply );
 
@@ -50,10 +59,13 @@ class FEDiscussion extends \Module {
         $this->Template->posts = $this->posts;
         $this->Template->renderedPosts = $renderedPosts;
         $this->Template->formName = static::$postFormName;
+        $this->Template->watchFormName = static::$postWatchFormName;
         $this->Template->open = $this->hjk_discussion_open;
 
         $this->Template->replies = $this->hjk_discussion_reply;
         $this->Template->module_id = $this->id;
+        
+        $this->Template->isWatching = $this->isWatching ();
 
         if ( $this->Session->get('hjk_discussion_confirm')) {
             $this->Template->confirm = 1;
@@ -107,52 +119,64 @@ class FEDiscussion extends \Module {
     
     
     
-    private function handleFormSubmit () {
-        if ( ($form = \Input::post('FORM_SUBMIT') ) && ( $form == static::$postFormName) ) {
-
-            if ( ! FE_USER_LOGGED_IN ) {
-                $this->Session->set('hjk_discussion_error', "noLogin");
-                return \Controller::redirect ( $this->addToUrl ("") );
-            }
-
-            if ( ! \Input::post('subject')) {
-                $this->Session->set('hjk_discussion_error', "noSubject" );
-                return \Controller::redirect ( $this->addToUrl ("") );
-            } elseif ( ! \Input::post('content')) {
-                $this->Session->set('hjk_discussion_error', "noContent" );
-                return \Controller::redirect ( $this->addToUrl ("") );
-            } else {
-                $post = new HjkDiscussionsPostModel ();
-                $post -> subject =  \Input::post('subject');
-                $post -> content =  \Input::post('content');
-                $post -> pid = $this->hjk_discussion_group;
-                $post -> parent_type = $this->hjk_discussion_parent_type;
-                $post -> discussion_id = $this->currentDiscussionId;
-                $post -> member = $this->User->id;
-                $post -> date_posted = time();
-                $post -> published = 1;
-                $post -> page_url = $this->addToUrl();
-
-                $replyTo = null;
-                if ($replyId = \Input::post("reply_to")) {
-                    $replyTo = HjkDiscussionsPostModel::findById ( $replyId );
-                    if ( $replyTo && ($replyTo->discussion_id == $this->currentDiscussionId) && ( $replyTo->pid == $this->hjk_discussion_group ) ) {
-                        $post->reply_to = $replyTo->id;
-                    }
-                }
-
-                $post->save();
-                
-                $post->sendAdminMail ();
-
-                $group = HjkDiscussionsGroupModel::findById ( $this->hjk_discussion_group);
-                $group ->date_last_post = time();
-                $group->save();
-
-                $this->Session->set('hjk_discussion_confirm', 1);
-                return \Controller::redirect ( $this->addToUrl ("") );
-            }
+    private function _handleCommentSubmit () {
+        if ( ! FE_USER_LOGGED_IN ) {
+            $this->Session->set('hjk_discussion_error', "noLogin");
+            return \Controller::redirect ( $this->addToUrl ("") );
         }
+
+        if ( ! \Input::post('subject')) {
+            $this->Session->set('hjk_discussion_error', "noSubject" );
+            return \Controller::redirect ( $this->addToUrl ("") );
+        } elseif ( ! \Input::post('content')) {
+            $this->Session->set('hjk_discussion_error', "noContent" );
+            return \Controller::redirect ( $this->addToUrl ("") );
+        } else {
+            $post = new HjkDiscussionsPostModel ();
+            $post -> subject =  \Input::post('subject');
+            $post -> content =  \Input::post('content');
+            $post -> pid = $this->hjk_discussion_group;
+            $post -> parent_type = $this->hjk_discussion_parent_type;
+            $post -> discussion_id = $this->currentDiscussionId;
+            $post -> member = $this->User->id;
+            $post -> date_posted = time();
+            $post -> published = 1;
+            $post -> page_url = $this->addToUrl("");
+
+            $replyTo = null;
+            if ($replyId = \Input::post("reply_to")) {
+                $replyTo = HjkDiscussionsPostModel::findById ( $replyId );
+                if ( $replyTo && ($replyTo->discussion_id == $this->currentDiscussionId) && ( $replyTo->pid == $this->hjk_discussion_group ) ) {
+                    $post->reply_to = $replyTo->id;
+                }
+            }
+
+            $post->save();                
+
+            $group = HjkDiscussionsGroupModel::findById ( $this->hjk_discussion_group);
+            $group ->date_last_post = time();
+            $group->save();
+            
+            HjkDiscussionsWatchModel::triggerWatches( $post );                
+
+            $this->Session->set('hjk_discussion_confirm', 1);
+            return \Controller::redirect ( $this->addToUrl ("") );
+        }
+    }
+    
+    private function _handleWatchSubmit () {
+        if ( ! FE_USER_LOGGED_IN ) {
+            $this->Session->set('hjk_discussion_error', "noLogin");
+            return \Controller::redirect ( $this->addToUrl ("") );
+        }
+
+        if ( \Input::post("enable_watch")) {
+            $watch = $this->enableWatch ();
+        } else {
+            $this->disableWatch ( );
+        }
+        
+        return \Controller::redirect ( $this->addToUrl ("") );
     }
 
 
@@ -166,7 +190,7 @@ class FEDiscussion extends \Module {
     
     
     private function initialize () {
-        $this->import ( "FrontendUser", "User");
+        $this->import ("FrontendUser", "User");
         $this->import ("Environment");
         $this->import ("Session");
 
@@ -199,6 +223,39 @@ class FEDiscussion extends \Module {
             default;
                 $this->currentDiscussionId = $this->id;
         }
-   }
+    }
+   
+   
+    public function isWatching ( ) {
+        return $this->getCurrentWatch() != null;
+    }
+    
+    public function enableWatch ( ) {
+        $watch = new HjkDiscussionsWatchModel();
+        $watch->parent_type = $this->hjk_discussion_parent_type;
+        $watch->discussion_id = $this->currentDiscussionId;
+        $watch->member = $this->User->id;
+        $watch->uri = $this->Environment->requestUri;
+
+        $watch->save();
+        
+        return $watch;
+    }
+    
+    public function disableWatch (  ) {
+        $watch = $this->getCurrentWatch();
+        
+        if ( $watch ) {
+            $watch->delete();
+        }
+    }
+    
+    protected function getCurrentWatch () {
+        return HjkDiscussionsWatchModel::findOneBy ( 
+            array ( "discussion_id=?", "parent_type=?", "member=?"),
+            array ( $this->currentDiscussionId, $this->hjk_discussion_parent_type, $this->User->id )
+        );
+    }
+   
     
 }

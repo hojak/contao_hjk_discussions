@@ -3,6 +3,26 @@
 <?php $this->block('content'); ?>
 
 
+<?php if ( $this->open && FE_USER_LOGGED_IN ): ?>
+<!-- indexer::stop -->
+    <div class="watch_form">
+    <form method="post" id="hjk_discussion_<?= $this->module_id ?>">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">        
+        <input type="hidden" name="FORM_SUBMIT" value="<?= $this->watchFormName ?>">
+        
+        <?php if ( $this->isWatching ): ?>
+        <input type="submit" name="disable_watch" value="nicht mehr beobachten" title="aktuell beobachtet" class="submit button bg_purple" />
+        <?php else: ?>
+        <input type="submit" name="enable_watch" value="beobachten" title="aktuell nicht beobachtet" class="submit button bg_green"/>
+        <?php endif; ?>
+    </form>
+    </div>
+<!-- indexer::continue -->
+<?php endif; ?>
+
+
+
+
 <?php if ( $this->renderedPosts ): ?>
 <div class="discussion_posts" >
 
@@ -12,7 +32,6 @@
 
 </div>
 <?php endif; ?>
-
 
 <br clear="all" />
 
@@ -53,8 +72,7 @@
         
         <div class="submit_container button bg_right bg_purple icon_arrow_white">
             <input type="submit" value="abschicken" class="submit button bg_purple bg_right icon_arrow_white"/>
-        </div>
-        
+        </div>        
     </form>
 </div>
 
