@@ -1,6 +1,10 @@
-<?php $this->extend('block_searchable'); ?>
 
-<?php $this->block('content'); ?>
+<div class="<?= $this->isWatching ? "watching " : "" ?><?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
+
+  <?php if ($this->headline): ?>
+    <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+  <?php endif; ?>
+
 
 
 <?php if ( $this->open && FE_USER_LOGGED_IN ): ?>
@@ -19,7 +23,6 @@
     </div>
 <!-- indexer::continue -->
 <?php endif; ?>
-
 
 
 
@@ -82,8 +85,7 @@
 
   
 
-<?php $this->endblock(); ?>
-
+</div>
 
 
 <!--- <div class="mod_hjk_discussion<?= $this->class ?>" id="<?= $this->id ?>"> -->

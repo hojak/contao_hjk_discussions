@@ -66,7 +66,7 @@ class FEDiscussion extends \Module {
         $this->Template->module_id = $this->id;
         
         $this->Template->isWatching = $this->isWatching ();
-
+        
         if ( $this->Session->get('hjk_discussion_confirm')) {
             $this->Template->confirm = 1;
             $this->Session->remove('hjk_discussion_confirm');
