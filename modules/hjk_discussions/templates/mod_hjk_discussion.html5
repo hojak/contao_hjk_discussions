@@ -15,9 +15,9 @@
         <input type="hidden" name="FORM_SUBMIT" value="<?= $this->watchFormName ?>">
         
         <?php if ( $this->isWatching ): ?>
-        <input type="submit" name="disable_watch" value="nicht mehr beobachten" title="aktuell beobachtet" class="submit button bg_purple" />
+        <input type="submit" name="disable_watch" value="Abo abbestellen" title="aktuell beobachtet" class="submit button disable_watch" />
         <?php else: ?>
-        <input type="submit" name="enable_watch" value="beobachten" title="aktuell nicht beobachtet" class="submit button bg_green"/>
+        <input type="submit" name="enable_watch" value="Kommentare per Mail abonnieren" title="aktuell nicht beobachtet" class="submit button enable_watch"/>
         <?php endif; ?>
     </form>
     </div>
